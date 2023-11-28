@@ -1,0 +1,24 @@
+import hou
+ 
+selected_nodes = hou.selectedNodes()
+ 
+if len(selected_nodes) > 0:    
+    selected_node = selected_nodes[0]    
+    parent_node = selected_node.parent()     
+    obj_merge = parent_node.createNode("object_merge", "object_merge1")    
+    obj_merge.parm("objpath1").set(selected_node.path())    
+    obj_merge.setPosition(selected_node.position() - hou.Vector2(-3, .5))    
+    obj_merge.setDisplayFlag(True)
+    obj_merge.setRenderFlag(True)
+ 
+    
+    selected_node_name = selected_node.name()
+    if selected_node_name.startswith("OUT_"):
+        selected_node_name = selected_node_name[4:]
+ 
+    
+    obj_merge.setName("IN_" + selected_node_name)
+    obj_merge.setColor(hou.Color((0.3, 0.075, 0.3)))
+ 
+else:
+    print("Please select a node.")
