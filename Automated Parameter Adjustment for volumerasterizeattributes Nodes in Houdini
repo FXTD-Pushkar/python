@@ -1,0 +1,14 @@
+# Title: Automated Parameter Adjustment for volumerasterizeattributes Nodes in Houdini
+# This code can be used to change any parameter across multiple nodes in Houdini.
+
+import hou
+
+scene = hou.node('/obj')
+for node in scene.children():
+    if node.name().startswith('smoke_trail_'):
+        for child in node.children():
+            if child.name().startswith('volumerasterizeattributes'):
+                child.parm('particlescale').set(0.04)
+
+
+print("The particlescale parameter has been set to 0.04 for all volumerasterizeattributes nodes.")
